@@ -1,0 +1,59 @@
+name: Test
+
+permissions:
+  contents: read
+
+on: [push, pull_request]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: Test
+    runs-on: macos-latest
+    timeout-minutes: 10
+    env:
+      HOMEBREW_NO_AUTO_UPDATE: "1"
+      HOMEBREW_NO_ENV_HINTS: "1"
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Link checkout as a local tap
+        run: |
+          tap_path="$(brew --repository)/Library/Taps/electerious/homebrew-tap"
+          mkdir -p "$(dirname "$tap_path")"
+          ln -s "$GITHUB_WORKSPACE" "$tap_path"
+
+      - name: Trust tap packages for testing
+        run: |
+          brew trust --formula electerious/tap/aufgabe electerious/tap/safari
+          brew trust --cask electerious/tap/letra
+
+      - name: Check Homebrew style
+        run: brew style Formula/aufgabe.rb Formula/safari.rb Casks/letra.rb
+
+      - name: Audit tap
+        run: brew audit --strict --online --tap=electerious/tap
+
+      - name: Run Homebrew tap syntax checks
+        run: brew test-bot --only-tap-syntax --tap=electerious/tap
+
+      - name: Install and test Aufgabe
+        run: |
+          brew install --build-from-source electerious/tap/aufgabe
+          brew test electerious/tap/aufgabe
+
+      - name: Install and test Safari
+        run: |
+          brew install --build-from-source electerious/tap/safari
+          brew test electerious/tap/safari
+
+      - name: Install and verify Letra cask
+        run: |
+          brew install --cask --appdir="$RUNNER_TEMP/Applications" electerious/tap/letra
+          test -d "$RUNNER_TEMP/Applications/Letra.app"
