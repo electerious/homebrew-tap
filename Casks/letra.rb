@@ -5,7 +5,9 @@ cask "letra" do
   url "https://s.electerious.com/letra/v1.0.0.zip"
   name "Letra"
   desc "Script launcher"
-  homepage "https://electerious.com"
+  homepage "https://electerious.com/"
+
+  depends_on macos: :golden_gate
 
   app "Letra.app"
 end
