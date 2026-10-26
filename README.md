@@ -16,6 +16,7 @@ Then install any package you need:
 |---|---|---|---|
 | Letra | Cask | Menu bar script launcher (macOS 27+) | `brew install --cask letra` |
 | [Aufgabe](https://github.com/electerious/aufgabe) | Formula | Daily task logging CLI | `brew install aufgabe` |
+| [Jira](https://github.com/electerious/jira) | Formula | Search, inspect, and open Jira issues | `brew install jira` |
 | [Safari](https://github.com/electerious/safari) | Formula | Read Safari bookmarks, Reading List, and history | `brew install safari` |
 
 ## Packages
@@ -27,6 +28,10 @@ Letra is a script launcher for macOS. It allows you to quickly run scripts using
 ### Aufgabe
 
 Aufgabe is a command-line tool for logging daily tasks. It helps you keep track of your work.
+
+### Jira
+
+Jira is a command-line tool for searching, inspecting, and opening Jira issues. It requires a Jira Server or Data Center personal access token.
 
 ### Safari
 
