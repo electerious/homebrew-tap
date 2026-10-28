@@ -7,6 +7,10 @@ cask "letra" do
   desc "Script launcher"
   homepage "https://electerious.com/"
 
+  livecheck do
+    skip "No version information is published"
+  end
+
   depends_on macos: :golden_gate
 
   app "Letra.app"
