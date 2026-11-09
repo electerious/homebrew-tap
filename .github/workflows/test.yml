@@ -53,7 +53,14 @@ jobs:
           brew install --build-from-source electerious/tap/safari
           brew test electerious/tap/safari
 
-      - name: Install and verify Letra cask
+      - name: Install and verify Letra cask on macOS 27+
         run: |
+          macos_version="$(sw_vers -productVersion)"
+          macos_major_version="${macos_version%%.*}"
+          if (( macos_major_version < 27 )); then
+            echo "::notice title=Skipping Letra install::Letra requires macOS 27; runner is macOS $macos_version."
+            exit 0
+          fi
+
           brew install --cask --appdir="$RUNNER_TEMP/Applications" electerious/tap/letra
           test -d "$RUNNER_TEMP/Applications/Letra.app"
