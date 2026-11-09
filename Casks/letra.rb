@@ -1,6 +1,6 @@
 cask "letra" do
-  version "1.0.1"
-  sha256 "d9375927c54c213763427091681a9f9c7efccd839315f44871bfc2afd39891a8"
+  version "1.0.2"
+  sha256 "34f965495eeb22120f6a62ce8fd176524589ca5f4ee6cf66ac08b62bcbcf4461"
 
   url "https://s.electerious.com/letra/v#{version}.zip"
   name "Letra"
@@ -8,7 +8,8 @@ cask "letra" do
   homepage "https://electerious.com/"
 
   livecheck do
-    skip "No version information is published"
+    url "https://s.electerious.com/letra/appcast.xml"
+    strategy :sparkle, &:short_version
   end
 
   depends_on macos: :golden_gate
