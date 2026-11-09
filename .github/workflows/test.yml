@@ -31,7 +31,7 @@ jobs:
 
       - name: Trust tap packages for testing
         run: |
-          brew trust --formula electerious/tap/aufgabe electerious/tap/safari
+          brew trust --formula electerious/tap/aufgabe electerious/tap/safari electerious/tap/jira
           brew trust --cask electerious/tap/letra
 
       - name: Check Homebrew style
